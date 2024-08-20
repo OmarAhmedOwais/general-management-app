@@ -7,3 +7,6 @@ export * from './async';
 export * from './config';
 export * from './logger';
 export * from './queryBuilder';
+export * from './file-system';
+export * from './initialSetUp';
+export * from '../validation/makeOptional.validation';

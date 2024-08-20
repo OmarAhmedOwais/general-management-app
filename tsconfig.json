@@ -11,6 +11,13 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
-    "typeRoots": ["./node_modules/@types", "src/express.d.ts"]
-  }
+    "typeRoots": ["./node_modules/@types", "src/data/express.d.ts"],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
 }

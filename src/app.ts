@@ -1,20 +1,27 @@
-import express from "express";
+import express, { Application } from "express";
 import "reflect-metadata";
 import dotenv from "dotenv";
 
-import { errorHandler } from "./middlewares/errorMiddleware";
-import { apiLimiter } from "./middlewares/rateLimit";
-import { AppDataSource } from "./config/data-source";
-import { setupSwagger } from "./utils/swagger";
+import { globalErrorMiddleware } from "./common/middlewares/global-error.middleware";
+import { apiLimiter } from "./common/middlewares/rateLimit.middleware";
+import { AppDataSource } from "./common/config/data-source";
+import { setupSwagger } from "./common/utils/swagger";
+import { mountRouter } from "./common/routers";
+import { NotFoundMiddleware } from "./common/middlewares/not-found.middleware";
 
 dotenv.config();
 
-const app = express();
-
+const app: Application = express();
+const notFoundMiddleware = new NotFoundMiddleware();
 app.use(express.json());
 app.use(apiLimiter);
 
-app.use(errorHandler);
+// Mount routers
+app.use('/api/v1', mountRouter);
+
+// Apply custom middleware
+app.all('*', notFoundMiddleware.execute);
+app.use(globalErrorMiddleware);
 
 setupSwagger(app);
 

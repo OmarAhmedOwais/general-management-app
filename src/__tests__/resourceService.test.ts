@@ -1,6 +1,6 @@
-import { ResourceService } from '../services/ResourceService';
-import { AppDataSource } from '../config/data-source';
-import { Resource } from '../entities/Resource';
+import { ResourceService } from '../resource/resource.service';
+import { AppDataSource } from '../common/config/data-source';
+import { Resource } from '../data/entities/Resource';
 
 beforeAll(async () => {
   try {

@@ -23,6 +23,8 @@ export class ApiError extends Error {
     this.status = status;
     this.messages = messages;
     this.metadata = metadata;
+    console.log(this.stack);
+    
     this.stack = config.NODE_ENV === 'production' ? 'You are in production' : this.stack;
 
     // Log the creation of the error

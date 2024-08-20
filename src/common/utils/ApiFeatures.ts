@@ -3,13 +3,14 @@ import { IPaginationResult, IQuery } from '@/data/types';
 import { QueryBuilder } from './queryBuilder';
 
 export class ApiFeatures<T extends Document> {
-  paginationResult: IPaginationResult = {
+  pagination: IPaginationResult = {
     totalPages: 0,
     page: 0,
     limit: 0,
     total: 0,
-    hasPrev: false,
-    hasNext: false,
+    length: 0,
+    hasNextPage: false,
+    hasPreviousPage: false,
   };
   data: T[] = [];
   constructor(
@@ -113,19 +114,23 @@ export class ApiFeatures<T extends Document> {
     });
     const total = await countQuery.countDocuments();
     const totalPages = Math.ceil(total / limitNumber);
-    const hasPrev = pageNumber > 1;
-    const hasNext = pageNumber < totalPages;
+    const hasNextPage = pageNumber > 1;
+    const hasPreviousPage = pageNumber < totalPages;
     this.mongooseQuery = this.mongooseQuery.skip(skip).limit(limitNumber);
-    this.paginationResult = {
+
+    // Fetch the data before setting the pagination object
+    this.data = await this.mongooseQuery;
+
+    this.pagination = {
       totalPages,
       page: pageNumber,
       limit: limitNumber,
       total: total,
-      hasPrev,
-      hasNext,
+      hasNextPage,
+      hasPreviousPage,
+      length: this.data.length, // Now this.data is populated and length is accurate
     };
 
-    this.data = await this.mongooseQuery;
     return this;
   }
 }

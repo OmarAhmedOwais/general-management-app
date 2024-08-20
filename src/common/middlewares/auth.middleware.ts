@@ -2,14 +2,15 @@ import { BaseMiddleware } from '@/base';
 import { Request, Response, NextFunction } from 'express';
 import { UnauthorizedError } from '@/common/errors';
 import { logger, verifyToken } from '@/common/utils';
-import { UserService } from '@/user/services';
+import { UserService } from '@/services/identity';
+import { IUser } from '@/data/types';
 
 class AuthMiddleware implements BaseMiddleware {
   constructor(private userService: UserService) {}
-
   execute = async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
     const authorizationHeader = req.headers.authorization;
     logger.info('Authorization Header:', authorizationHeader);
+    logger.info('authMiddleware: Checking authentication');
 
     if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
       logger.error('Authorization header is missing or does not start with "Bearer "');
@@ -28,12 +29,11 @@ class AuthMiddleware implements BaseMiddleware {
       const { id } = verifyToken(token);
       logger.info('Token verified successfully. User ID:', id);
 
-      const user = await this.userService.findById(id);
+      const user = await this.userService.findById(id) as IUser;
       if (!user) {
         logger.error('User not found for ID:', id);
         return next(new UnauthorizedError('Your account does not exist'));
       }
-
       req.user = user;
       next();
     } catch (error) {

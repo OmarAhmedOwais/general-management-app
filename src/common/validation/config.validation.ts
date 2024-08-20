@@ -15,5 +15,9 @@ export const envVarsSchema = joi
     JWT_EXPIRES_IN: joi.string().required(),
     JWT_EXPIRE_GUEST: joi.string().required(),
     APP_URL: joi.string().required(),
+    AWS_REGION: joi.string().optional(),
+    AWS_ACCESS_KEY_ID: joi.string().optional(),
+    AWS_SECRET_ACCESS_KEY: joi.string().optional(),
+    AWS_S3_BUCKET_NAME: joi.string().optional(),
   })
   .unknown(true);
