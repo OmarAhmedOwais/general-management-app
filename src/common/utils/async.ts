@@ -8,8 +8,6 @@ export const asyncHandler =
   
   // @ts-ignore
   import Layer from "express/lib/router/layer";
-  // import { languages } from "sarri-package/utils/types/enums/language";
-  // import { Timezone, headerType } from "sarri-package/utils/types";
   
   Layer.prototype.handle_request = async function handle(
     req: Request,
@@ -19,11 +17,6 @@ export const asyncHandler =
     const fn = this.handle;
     if (fn.length > 3) return next();
     try {
-      // req.lang =
-        // req.headers[headerType.language] === languages.ar
-        //   ? languages.ar
-        //   : languages.en;
-      // req.TZ = req.headers[headerType.TZ] as Timezone;
       await fn(req, res, next);
     } catch (err: any) {
       next(err);

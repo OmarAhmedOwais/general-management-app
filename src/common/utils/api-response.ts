@@ -47,13 +47,13 @@ export class ApiResponse {
     this.messages = messages;
     if (pagination) {
       this.pagination = {
-        // totalPages: pagination.totalPages,
-        // page: pagination.page,
-        // length: pagination.length,
-        // limit: pagination.limit,
+        totalPages: pagination.totalPages,
+        page: pagination.page,
+        length: pagination.length,
+        limit: pagination.limit,
         total: pagination.total,
-        // hasNextPage: pagination.hasNextPage,
-        // hasPreviousPage: pagination.hasPreviousPage,
+        hasNextPage: pagination.hasNextPage,
+        hasPreviousPage: pagination.hasPreviousPage,
       };
     }
     this.data = data;

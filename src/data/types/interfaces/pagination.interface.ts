@@ -7,11 +7,11 @@ export interface PaginationQuery {
 }
 
 export interface IPaginationResult {
-  // totalPages: number;
-  //   page: number;
-  //   limit: number;
+  totalPages: number;
+    page: number;
+    limit: number;
     total: number;
-    // length: number;
-    // hasNextPage: boolean;
-    // hasPreviousPage: boolean;
+    length: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
 }

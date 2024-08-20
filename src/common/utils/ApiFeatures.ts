@@ -1,8 +1,8 @@
-import { Document, Query } from 'mongoose';
+import { ObjectLiteral, SelectQueryBuilder } from 'typeorm';
 import { IPaginationResult, IQuery } from '@/data/types';
 import { QueryBuilder } from './queryBuilder';
 
-export class ApiFeatures<T extends Document> {
+export class ApiFeatures<T extends ObjectLiteral> {
   pagination: IPaginationResult = {
     totalPages: 0,
     page: 0,
@@ -14,13 +14,13 @@ export class ApiFeatures<T extends Document> {
   };
   data: T[] = [];
   constructor(
-    public mongooseQuery: Query<T[], T>,
+    public typeOrmQuery: SelectQueryBuilder<T>,
     public queryString: IQuery,
   ) {}
 
   sort() {
-    const sort = this.queryString?.sort?.split(',').join(' ') || '-createdAt';
-    this.mongooseQuery.sort(sort);
+    const sort = this.queryString?.sort?.split(',').join(' ') || 'createdAt DESC';
+    this.typeOrmQuery.orderBy(sort);
     return this;
   }
 
@@ -55,9 +55,7 @@ export class ApiFeatures<T extends Document> {
       queryStr = JSON.stringify(parsedQueryString);
     }
 
-    this.mongooseQuery = this.mongooseQuery.find(
-      queryBuilder.addFilter(JSON.parse(queryStr)).build(),
-    );
+    this.typeOrmQuery.where(queryBuilder.addFilter(JSON.parse(queryStr)).build());
 
     return this;
   }
@@ -66,21 +64,17 @@ export class ApiFeatures<T extends Document> {
     const { keyword } = this.queryString;
 
     if (keyword) {
-      const keywordObj = {
-        $or: Object.keys(keyword).map((key) => {
-          if (typeof keyword[key] === 'string') {
-            return {
-              [key]: { $regex: keyword[key], $options: 'i' },
-            };
-          }
-          const keys = (keyword[key] as unknown as [string]).map((value) => ({
-            [key]: { $regex: value, $options: 'i' },
-          }));
-          return { $or: keys };
-        }),
-      } as any;
+      const keywordObj = Object.keys(keyword).map((key) => {
+        if (typeof keyword[key] === 'string') {
+          return `${key} ILIKE '%${keyword[key]}%'`;
+        }
+        const keys = (keyword[key] as unknown as [string]).map((value) => 
+          `${key} ILIKE '%${value}%'`
+        );
+        return `(${keys.join(' OR ')})`;
+      }).join(' OR ');
 
-      this.mongooseQuery = this.mongooseQuery.find(keywordObj);
+      this.typeOrmQuery.andWhere(`(${keywordObj})`);
     }
 
     return this;
@@ -91,7 +85,7 @@ export class ApiFeatures<T extends Document> {
     if (fields) {
       const fieldsBy = fields.split(',').join(' ');
 
-      this.mongooseQuery = this.mongooseQuery.select(fieldsBy);
+      this.typeOrmQuery.select(fieldsBy);
     }
     return this;
   }
@@ -99,7 +93,7 @@ export class ApiFeatures<T extends Document> {
   populate() {
     const populate = this.queryString?.populate?.split(',').join(' ');
     if (populate) {
-      this.mongooseQuery = this.mongooseQuery.populate(populate);
+      this.typeOrmQuery.leftJoinAndSelect(populate, populate);
     }
     return this;
   }
@@ -109,17 +103,16 @@ export class ApiFeatures<T extends Document> {
     const pageNumber = page ? +page : 1;
     const limitNumber = limit ? +limit : 10;
     const skip = (pageNumber - 1) * limitNumber;
-    const countQuery = this.mongooseQuery.model.find({
-      ...this.mongooseQuery.getQuery(),
-    });
-    const total = await countQuery.countDocuments();
+
+    const total = await this.typeOrmQuery.getCount();
     const totalPages = Math.ceil(total / limitNumber);
-    const hasNextPage = pageNumber > 1;
-    const hasPreviousPage = pageNumber < totalPages;
-    this.mongooseQuery = this.mongooseQuery.skip(skip).limit(limitNumber);
+    const hasNextPage = pageNumber < totalPages;
+    const hasPreviousPage = pageNumber > 1;
+
+    this.typeOrmQuery.skip(skip).take(limitNumber);
 
     // Fetch the data before setting the pagination object
-    this.data = await this.mongooseQuery;
+    this.data = await this.typeOrmQuery.getMany();
 
     this.pagination = {
       totalPages,

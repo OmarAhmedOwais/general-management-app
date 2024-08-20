@@ -1,6 +1,4 @@
-// paginateUsers.ts
-
-export const getUserPaginationOptions = (
+export const getPaginationOptions = (
   page: string | undefined,
   limit: string | undefined,
 ): { currentPage: number; itemsPerPage: number } => {
