@@ -1,6 +1,6 @@
 // user validation 
 import { body } from 'express-validator';
-import { UserRole } from '@/data/types';
+import { UserRole } from '../data/types';
 
 
 export const createUserValidation = [

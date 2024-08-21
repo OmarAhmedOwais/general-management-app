@@ -1,4 +1,4 @@
-import { UserRole, UserStatus } from '@/data/types';
+import { UserRole, UserStatus } from '../enums';
 import { Document } from 'mongoose';
 
 export interface IUser extends Document {

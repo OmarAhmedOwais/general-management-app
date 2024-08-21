@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { BaseService } from './base.service';
 import { ApiResponse, asyncHandler } from '../common/utils';
-import { MessageType } from '@/data';
+import { MessageType } from '../data';
 import { NotFoundError } from '../common/errors';
-import { ObjectLiteral } from 'typeorm';
+import { DeepPartial, ObjectLiteral } from 'typeorm';
 
 export class BaseController<T extends ObjectLiteral > {
   protected service: BaseService<T>;
@@ -16,7 +16,7 @@ export class BaseController<T extends ObjectLiteral > {
   }
 
   create = asyncHandler(async (req: Request, res: Response) => {
-    const item = await this.service.create(req.body as Partial<T>);
+    const item = await this.service.create(req.body as DeepPartial<T>);
     const response = new ApiResponse({
       messages: [
         {

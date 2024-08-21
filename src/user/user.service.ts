@@ -1,17 +1,18 @@
-import { IUser, MessageType } from "@/data/types";
-import { NotFoundError } from "@/common/errors";
-import RepositoryFactory from "@/common/factories/repository.factory";
-import { BaseService } from "@/base/base.service";
+import { AppDataSource } from '../common/config/data-source';
+import { User } from '../data/entities';
+import { BaseService } from '../base'; 
+import { NotFoundError } from '../common/errors';
+import { MessageType } from '../data';
 
-export class UserService extends BaseService<IUser> {
-  private userRepository = RepositoryFactory.createUserRepository();
+export class UserService extends BaseService<User> {
+  private userRepository = AppDataSource.getRepository(User);
 
   constructor() {
-    super(RepositoryFactory.createUserRepository()); // Pass the userRepository to the base class constructor
+    super(AppDataSource.getRepository(User)); // Pass the repository instance to the BaseService constructor
   }
 
   async findById(userId: string) {
-    const user = await this.userRepository.findById(userId);
+    const user = await this.userRepository.findOneBy({ id: parseInt(userId) });
     if (!user) {
       throw new NotFoundError([
         { message_en: "User not found", type: MessageType.ERROR },
@@ -20,8 +21,8 @@ export class UserService extends BaseService<IUser> {
     return user;
   }
 
-  async update(userId: string, userData: IUser) {
-    const updatedUser = await this.userRepository.update(userId, userData);
+  async update(userId: string, userData: Partial<User>) {
+    const updatedUser = await super.update(userId, userData);
     if (!updatedUser) {
       throw new NotFoundError([
         { message_en: "User not found", type: MessageType.ERROR },
@@ -31,12 +32,13 @@ export class UserService extends BaseService<IUser> {
   }
 
   async delete(userId: string) {
-    const deletedUser = await this.userRepository.delete(userId);
-    if (!deletedUser) {
+    const user = await this.userRepository.findOneBy({ id: parseInt(userId) });
+    if (!user) {
       throw new NotFoundError([
         { message_en: "User not found", type: MessageType.ERROR },
       ]);
     }
-    return deletedUser;
+    await this.userRepository.remove(user);
+    return user;
   }
 }

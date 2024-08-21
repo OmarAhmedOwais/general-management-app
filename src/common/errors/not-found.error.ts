@@ -1,6 +1,8 @@
 import { StatusCodes } from 'http-status-codes';
+
 import { ApiError } from './api.error';
-import { ResponseStatus } from '@/data/types/enums';
+
+import { ResponseStatus } from '../../data/types/enums';
 
 export class NotFoundError extends ApiError {
   constructor(messages: ApiError['messages'], metadata?: ApiError['metadata']) {

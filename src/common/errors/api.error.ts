@@ -1,21 +1,19 @@
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
-import { MessageType, ResponseStatus } from '@/data/types/enums';
-import { logger } from '@/common/utils/logger';
-import { config } from '@/common/config/config';
 
+import { MessageType, ResponseStatus } from '../../data/types/enums';
+import { config } from '../config/config';
 interface ApiErrorOptions {
   statusCode: StatusCodes;
-  messages: { message_en: string; message_ar?: string; type?: MessageType }[];
+  messages: { message_en: string;message_ar?:string; type?: MessageType }[];
   metadata?: any;
   status: ResponseStatus;
 }
 
 export class ApiError extends Error {
-  public statusCode: StatusCodes;
-  public status: ResponseStatus;
-  public messages: { message_en: string; message_ar?: string; type?: MessageType }[];
-  public metadata?: any;
-
+  public statusCode;
+  status;
+  messages;
+  metadata;
   constructor({ statusCode, messages, metadata, status }: ApiErrorOptions) {
     super();
     this.name = getReasonPhrase(statusCode);
@@ -23,17 +21,9 @@ export class ApiError extends Error {
     this.status = status;
     this.messages = messages;
     this.metadata = metadata;
-    console.log(this.stack);
-    
-    this.stack = config.NODE_ENV === 'production' ? 'You are in production' : this.stack;
-
-    // Log the creation of the error
-    logger.error(`ApiError created: ${this.name}`, {
-      statusCode,
-      messages,
-      metadata,
-      status,
-      stack: this.stack,
-    });
+    this.stack =
+      config.NODE_ENV === 'production'
+        ? 'You are in production'
+        : this.stack;
   }
 }

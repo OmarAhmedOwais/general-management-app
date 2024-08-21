@@ -3,11 +3,11 @@ import {
   GenerateTokenPayload,
   logger,
   Password,
-} from "@/common/utils";
+} from "../common/utils";
 import { AppDataSource } from "../common/config/data-source";
 import { User } from "../data/entities/User";
-import { BadRequestError } from "@/common/errors";
-import { MessageType } from "@/data";
+import { BadRequestError } from "../common/errors";
+import { MessageType } from "../data";
 
 export class AuthService {
   private userRepository = AppDataSource.getRepository(User);

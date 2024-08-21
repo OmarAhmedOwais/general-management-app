@@ -7,9 +7,9 @@ import {
   getResourceById,
   searchResources,
 } from "./resource.controller";
-import { MiddlewareFactory } from "@/common/factories";
-import { UserService } from "@/user";
-import { UserRole } from "@/data";
+import { MiddlewareFactory } from "../common/factories";
+import { UserService } from "../user";
+import { UserRole } from "../data";
 
 // Instantiate UserService and MiddlewareFactory
 const userService = new UserService();
@@ -21,33 +21,33 @@ const adminAllowedMiddleware = middlewareFactory.createAllowedToMiddleware(
 );
 
 
-const resourceRoutes = Router();
+const resourceRouter = Router();
 
-resourceRoutes.get("/", authMiddleware, getResources);
+resourceRouter.get("/", authMiddleware, getResources);
 
-resourceRoutes.post(
+resourceRouter.post(
   "/",
   authMiddleware,
   adminAllowedMiddleware,
   createResource
 );
 
-resourceRoutes.route("/search").get(authMiddleware, searchResources);
+resourceRouter.route("/search").get(authMiddleware, searchResources);
 
-resourceRoutes.route("/:id").get(authMiddleware, getResourceById);
+resourceRouter.route("/:id").get(authMiddleware, getResourceById);
 
-resourceRoutes.put(
+resourceRouter.put(
   "/:id",
   authMiddleware,
   adminAllowedMiddleware,
   updateResource
 );
 
-resourceRoutes.delete(
+resourceRouter.delete(
   "/:id",
   authMiddleware,
   adminAllowedMiddleware,
   deleteResource
 );
 
-export { resourceRoutes };
+export { resourceRouter };

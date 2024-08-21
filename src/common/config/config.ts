@@ -1,5 +1,5 @@
-import { IConfig } from '@/data/types';
-import logger from '@/common/utils/logger';
+import { IConfig } from '../../data/types';
+import logger from '../utils/logger';
 import { validateEnv } from '../utils';
 
 class ConfigSingleton {

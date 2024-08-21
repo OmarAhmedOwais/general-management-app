@@ -1,7 +1,7 @@
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 
-import { MessageType, ResponseStatus } from '@/data/types/enums';
-import { IPaginationResult } from '@/data/types';
+import { MessageType, ResponseStatus } from '../../data/types/enums';
+import { IPaginationResult } from '../../data/types';
 
 export interface ApiPagination {
   total: number;
