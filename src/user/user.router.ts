@@ -1,8 +1,8 @@
 import { Router } from "express";
 
 import { UserController } from "./user.controller";
-import { MiddlewareFactory } from "@/common/factories";
-import { UserRole } from "@/data/types";
+import { MiddlewareFactory } from "../common/factories";
+import { UserRole } from "../data/types";
 import { UserService } from "./user.service";
 
 const userRouter = Router();
@@ -19,13 +19,13 @@ const adminAllowedMiddleware = middlewareFactory.createAllowedToMiddleware(
 
 userRouter
   .route("/")
-  .get(authMiddleware, adminAllowedMiddleware, userController.getUsers)
-  .post(authMiddleware, adminAllowedMiddleware, userController.createUser);
+  .get(authMiddleware, adminAllowedMiddleware, userController.findAll)
+  .post(authMiddleware, adminAllowedMiddleware, userController.create);
 
 userRouter
   .route("/:id")
-  .get(authMiddleware, adminAllowedMiddleware, userController.getUser)
-  .put(authMiddleware, adminAllowedMiddleware, userController.updateUser)
-  .delete(authMiddleware, adminAllowedMiddleware, userController.deleteUser);
+  .get(authMiddleware, adminAllowedMiddleware, userController.findById)
+  .put(authMiddleware, adminAllowedMiddleware, userController.update)
+  .delete(authMiddleware, adminAllowedMiddleware, userController.delete);
 
 export { userRouter };

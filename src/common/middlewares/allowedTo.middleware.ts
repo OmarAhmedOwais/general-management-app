@@ -1,7 +1,7 @@
-import { BaseMiddleware } from '@/base';
+import { BaseMiddleware } from '../../base';
 import { Request, Response, NextFunction } from 'express';
-import { UnauthorizedError } from '@/common/errors';
-import { IUser, UserRole } from '@/data/types';
+import { UnauthorizedError } from '../../common/errors';
+import { IUser, UserRole } from '../../data/types';
 import { logger } from '../utils';
 
 class AllowedToMiddleware implements BaseMiddleware {

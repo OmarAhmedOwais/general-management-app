@@ -1,4 +1,4 @@
-import { config } from '@/common/config/config';
+import { config } from '../../common/config/config';
 import jwt from 'jsonwebtoken';
 
 export interface GenerateTokenPayload {

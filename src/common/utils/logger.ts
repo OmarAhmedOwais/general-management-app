@@ -1,7 +1,6 @@
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import path from 'path';
-import { MongoDB } from 'winston-mongodb';
 import { validateEnv } from './config';
 
 const {error , value : config}=validateEnv(process.env)
@@ -45,18 +44,6 @@ export const logger = winston.createLogger({
           nestLikeFormat,
         ),
       }),
-    new MongoDB({
-      level: 'info', // Log level for MongoDB transport
-      db: config.MONGO_URI!, // MongoDB connection URI
-      collection: 'logs', // Collection name
-      format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.json(), // Store log data as JSON in MongoDB
-      ),
-      options: { // Assuming the transport allows passing options directly to MongoClient
-        useUnifiedTopology: true,
-      },
-    }),
   ].filter(Boolean) as winston.transport[],
 });
 

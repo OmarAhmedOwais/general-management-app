@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
-import { ApiResponse, asyncHandler } from '@/common/utils';
-import { MessageType } from '@/data';
+import { ApiResponse, asyncHandler } from '../common/utils';
+import { MessageType } from '../data';
 import { StatusCodes } from 'http-status-codes';
 
 export class AuthController {

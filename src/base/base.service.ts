@@ -2,16 +2,16 @@ import {
   getPaginationOptions,
   getSearchOptions,
   getSortOptions,
-} from "@/common/utils";
-import { BaseRepository } from "./base.repository";
-import { Repository, ObjectLiteral } from "typeorm";
-import { IPaginationResult } from "@/data";
+} from "../common/utils";
+import { Repository, ObjectLiteral, DeepPartial } from "typeorm";
+import { IPaginationResult } from "../data";
+import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 export class BaseService<T extends ObjectLiteral> {
-  private repository: BaseRepository<T>;
+  private repository: Repository<T>;
 
   constructor(repository: Repository<T>) {
-    this.repository = new BaseRepository<T>(repository);
+    this.repository = repository;
   }
 
   async findAll(query: any) {
@@ -27,17 +27,16 @@ export class BaseService<T extends ObjectLiteral> {
       fields
     );
 
-    const prismaQueryOptions = {
+    const typeOrmQueryOptions = {
       skip: (currentPage - 1) * itemsPerPage,
       take: itemsPerPage,
-      orderBy: sortOptions,
+      order: sortOptions,
       where: searchOptions,
     };
 
-    const data = await this.repository.findAll(prismaQueryOptions);
-    const total = await this.repository.countDocuments(query);
+    const [data, total] = await this.repository.findAndCount(typeOrmQueryOptions);
 
-    const PaginationParam: IPaginationResult = {
+    const paginationParam: IPaginationResult = {
       total: total,
       limit: itemsPerPage,
       length: data.length,
@@ -47,30 +46,35 @@ export class BaseService<T extends ObjectLiteral> {
       hasPreviousPage: currentPage > 1,
     };
 
-    // Implement pagination, sorting, filtering, etc.
     return {
       data,
-      pagination: PaginationParam,
+      pagination: paginationParam,
     };
   }
 
   async findOne(query: object): Promise<T | null> {
-    return await this.repository.findOne(query);
+    return await this.repository.findOneBy(query);
   }
 
   async findById(id: string): Promise<T | null> {
-    return await this.repository.findById(id);
+    return await this.repository.findOneBy({ id } as any);
   }
 
-  async create(item: Partial<T>): Promise<T> {
-    return await this.repository.create(item as any);
+  async create(item: DeepPartial<T>): Promise<T> {
+    const entity = this.repository.create(item);
+    return await this.repository.save(entity);
   }
 
-  async update(id: string, item: Partial<T>): Promise<T | null> {
-    return await this.repository.update(id, item as any);
+  async update(id: string, item: QueryDeepPartialEntity<T>): Promise<T | null> {
+    await this.repository.update(id, item);
+    return await this.repository.findOneBy({ id } as any);
   }
 
   async delete(id: string): Promise<T | null> {
-    return await this.repository.delete(id);
+    const entity = await this.repository.findOneBy({ id } as any);
+    if (entity) {
+      await this.repository.remove(entity);
+    }
+    return entity;
   }
 }

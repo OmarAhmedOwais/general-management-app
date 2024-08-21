@@ -1,10 +1,17 @@
+import 'colors';
+import dotenv from 'dotenv';
+// Load environment variables
+dotenv.config();
+
+// ==================================================================================
+// !!!!!!!!!!!!!!!!!!!!!!!!!! SAFE TO CODE AFTER THIS LINE !!!!!!!!!!!!!!!!!!!!!!!!!!
+// ==================================================================================
+
 import express, { Application } from "express";
 import "reflect-metadata";
-import dotenv from "dotenv";
 
 import { globalErrorMiddleware } from "./common/middlewares/global-error.middleware";
 import { apiLimiter } from "./common/middlewares/rateLimit.middleware";
-import { AppDataSource } from "./common/config/data-source";
 import { setupSwagger } from "./common/utils/swagger";
 import { mountRouter } from "./common/routers";
 import { NotFoundMiddleware } from "./common/middlewares/not-found.middleware";

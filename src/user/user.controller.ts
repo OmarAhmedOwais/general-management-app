@@ -1,9 +1,9 @@
 import { UserService } from "./user.service";
-import { IUser, Models } from "@/data/types";
+import { Models } from "../data/types";
+import { User } from "../data/entities";
+import { BaseController } from "../base";
 
-import { BaseController } from "@/base";
-
-export class UserController extends BaseController<IUser> {
+export class UserController extends BaseController<User> {
   constructor() {
     super(new UserService(), Models.User);
   }

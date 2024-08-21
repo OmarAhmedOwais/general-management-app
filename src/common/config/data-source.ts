@@ -15,16 +15,11 @@ export const AppDataSource = new DataSource({
 });
 
 // Initialize in tests
-beforeAll(async () => {
-  AppDataSource.initialize()
-    .then(() => {
-      console.log("Data Source has been initialized!");
-    })
-    .catch((err) => {
-      console.error("Error during Data Source initialization:", err);
-    });
-});
 
-afterAll(async () => {
-  await AppDataSource.destroy();
-});
+AppDataSource.initialize()
+  .then(() => {
+    console.log("Data Source has been initialized!");
+  })
+  .catch((err) => {
+    console.error("Error during Data Source initialization:", err);
+  });

@@ -1,5 +1,5 @@
-import { envVarsSchema } from '@/common/validation';
-import { IConfig } from '@/data/types';
+import { envVarsSchema } from '../validation';
+import { IConfig } from '../../data/types';
 import Joi from 'joi';
 
 export const validateEnv = (

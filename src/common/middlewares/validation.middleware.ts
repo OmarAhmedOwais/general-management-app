@@ -1,10 +1,10 @@
-import { BaseMiddleware } from '@/base';
+import { BaseMiddleware } from '../../base';
 import { Request, Response, NextFunction } from 'express';
-import { ApiError } from '@/common/errors';
+import { ApiError } from '../../common/errors';
 import { matchedData, validationResult, Schema, checkSchema } from 'express-validator';
 import { StatusCodes } from 'http-status-codes';
-import { MessageType, ResponseStatus } from '@/data/types';
-import { logger } from '@/common/utils';
+import { MessageType, ResponseStatus } from '../../data/types';
+import { logger } from '../../common/utils';
 
 export class ValidationMiddleware implements BaseMiddleware {
   constructor(private schema: Schema) {}
