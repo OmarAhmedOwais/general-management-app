@@ -22,7 +22,6 @@ class AuthMiddleware implements BaseMiddleware {
       return next(
         new UnauthorizedError(
           "Please login first to get access",
-          "يرجى تسجيل الدخول أولاً"
         )
       );
     }
@@ -35,7 +34,6 @@ class AuthMiddleware implements BaseMiddleware {
       return next(
         new UnauthorizedError(
           "Please login first to get access",
-          "يرجى تسجيل الدخول أولاً"
         )
       );
     }
@@ -53,7 +51,7 @@ class AuthMiddleware implements BaseMiddleware {
       next();
     } catch (error) {
       logger.error("Token verification failed:", error);
-      return next(new UnauthorizedError("Invalid token", "رمز غير صالح"));
+      return next(new UnauthorizedError("Invalid token"));
     }
   };
 }
