@@ -14,12 +14,11 @@ import { globalErrorMiddleware } from "./common/middlewares/global-error.middlew
 import { apiLimiter } from "./common/middlewares/rateLimit.middleware";
 import { setupSwagger } from "./common/utils/swagger";
 import { mountRouter } from "./common/routers";
-import { NotFoundMiddleware } from "./common/middlewares/not-found.middleware";
+import { globalNotFoundMiddleware } from "./common/middlewares/not-found.middleware";
 
 dotenv.config();
 
 const app: Application = express();
-const notFoundMiddleware = new NotFoundMiddleware();
 app.use(express.json());
 app.use(apiLimiter);
 
@@ -27,7 +26,7 @@ app.use(apiLimiter);
 app.use('/api/v1', mountRouter);
 
 // Apply custom middleware
-app.all('*', notFoundMiddleware.execute);
+app.all('*', globalNotFoundMiddleware);
 app.use(globalErrorMiddleware);
 
 setupSwagger(app);
