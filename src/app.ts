@@ -26,7 +26,7 @@ app.use(apiLimiter);
 app.use("/api/v1", mountRouter);
 
 // Apply custom middleware
-app.all("*", globalNotFoundMiddleware);
+app.all('*', globalNotFoundMiddleware);
 app.use(globalErrorMiddleware);
 
 setupSwagger(app);
