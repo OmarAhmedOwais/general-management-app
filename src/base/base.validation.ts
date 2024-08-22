@@ -2,7 +2,6 @@ import { Schema, ParamSchema } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
 import { ValidationMiddleware } from '../common/middlewares/validation.middleware';
 
-
 export abstract class BaseValidation {
   protected idParam: ParamSchema = {
     in: ['params'],

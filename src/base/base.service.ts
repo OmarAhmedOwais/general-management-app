@@ -8,7 +8,7 @@ import { IPaginationResult } from "../data";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 export class BaseService<T extends ObjectLiteral> {
-  private repository: Repository<T>;
+  protected repository: Repository<T>;
 
   constructor(repository: Repository<T>) {
     this.repository = repository;
