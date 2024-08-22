@@ -5,6 +5,11 @@ import { BaseController } from "../base";
 
 export class UserController extends BaseController<User> {
   constructor() {
-    super(new UserService(), Models.User);
+    super(new UserService(),Models.User);
+  }
+
+  // Method to get the service instance
+  protected getServiceInstance(): UserService {
+    return new UserService();
   }
 }
