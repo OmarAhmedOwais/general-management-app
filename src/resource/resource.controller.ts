@@ -1,70 +1,73 @@
 import { Request, Response } from "express";
 import { ResourceService } from "./resource.service";
 
-const resourceService = new ResourceService();
+export class ResourceController {
+  private resourceService: ResourceService;
 
-
-export const getResources = async (
-  _req: Request,
-  res: Response
-): Promise<void> => {
-  const resources = await resourceService.getResources();
-  res.json(resources);
-};
-
-
-export const getResourceById = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const resource = await resourceService.getResourceById(Number(req.params.id));
-  if (resource) {
-    res.json(resource);
-  } else {
-    res.status(404).send("Resource not found");
+  constructor(resourceService: ResourceService) {
+    this.resourceService = resourceService;
   }
-};
 
+  public getResources = async (_req: Request, res: Response): Promise<void> => {
+    try {
+      const resources = await this.resourceService.getResources();
+      res.json(resources);
+    } catch (error) {
+      res.status(500).send("Internal Server Error");
+    }
+  };
 
-export const createResource = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const resource = await resourceService.createResource(req.body);
-  res.status(201).json(resource);
-};
+  public getResourceById = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const resource = await this.resourceService.getResourceById(Number(req.params.id));
+      if (resource) {
+        res.json(resource);
+      } else {
+        res.status(404).send("Resource not found");
+      }
+    } catch (error) {
+      res.status(500).send("Internal Server Error");
+    }
+  };
 
+  public createResource = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const resource = await this.resourceService.createResource(req.body);
+      res.status(201).json(resource);
+    } catch (error) {
+      res.status(500).send("Internal Server Error");
+    }
+  };
 
-export const updateResource = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const resource = await resourceService.updateResource(
-    Number(req.params.id),
-    req.body
-  );
-  if (resource) {
-    res.json(resource);
-  } else {
-    res.status(404).send("Resource not found");
-  }
-};
+  public updateResource = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const resource = await this.resourceService.updateResource(Number(req.params.id), req.body);
+      if (resource) {
+        res.json(resource);
+      } else {
+        res.status(404).send("Resource not found");
+      }
+    } catch (error) {
+      res.status(500).send("Internal Server Error");
+    }
+  };
 
+  public deleteResource = async (req: Request, res: Response): Promise<void> => {
+    try {
+      await this.resourceService.deleteResource(Number(req.params.id));
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).send("Internal Server Error");
+    }
+  };
 
-export const deleteResource = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  await resourceService.deleteResource(Number(req.params.id));
-  res.status(204).send();
-};
-
-
-export const searchResources = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const query = req.query.q as string;
-  const resources = await resourceService.searchResources(query);
-  res.json(resources);
-};
+  public searchResources = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const query = req.query.q as string;
+      const resources = await this.resourceService.searchResources(query);
+      res.json(resources);
+    } catch (error) {
+      res.status(500).send("Internal Server Error");
+    }
+  };
+}
