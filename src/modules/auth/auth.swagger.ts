@@ -1,5 +1,15 @@
 /**
  * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
  * tags:
  *   name: Authentication
  *   description: Endpoints for user authentication
@@ -7,7 +17,7 @@
 
 /**
  * @swagger
- * /register:
+ * /auth/register:
  *   post:
  *     summary: Register a new user
  *     description: Create a new user with email and password.
@@ -47,7 +57,7 @@
 
 /**
  * @swagger
- * /login:
+ * /auth/login:
  *   post:
  *     summary: Log in a user
  *     description: Authenticate a user and return a JWT token.

@@ -11,3 +11,4 @@ export * from '../validation/makeOptional.validation';
 export * from './search';
 export * from './sort';
 export * from './paginate';
+export * from './swagger';

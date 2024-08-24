@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { Resource } from "../data/entities/Resource";
-import { BaseController } from "../base/base.controller";
+import { Resource } from "../../data/entities/Resource";
+import { BaseController } from "../../base/base.controller";
 import { ResourceService } from "./resource.service";
 
 export class ResourceController extends BaseController<Resource> {

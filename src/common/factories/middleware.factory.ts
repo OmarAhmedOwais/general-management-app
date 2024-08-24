@@ -1,7 +1,7 @@
 import { UserRole } from '../../data/types';
 import { AllowedToMiddleware } from '../../common/middlewares/allowedTo.middleware';
 import { AuthMiddleware} from '../../common/middlewares/auth.middleware';
-import { UserService } from '../../user/user.service';
+import { UserService } from '../../modules/user/user.service';
 
 class MiddlewareFactory {
   private userService: UserService;

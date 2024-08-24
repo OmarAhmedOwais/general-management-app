@@ -1,4 +1,4 @@
-import { UserService } from "@/user/user.service";
+import { UserService } from "@/modules/user/user.service";
 import { User } from "@/data/entities/User";
 import { AppDataSource } from "@/common/config/data-source";
 import { Repository } from "typeorm";

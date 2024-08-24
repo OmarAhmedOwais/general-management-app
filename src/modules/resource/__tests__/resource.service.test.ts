@@ -1,4 +1,4 @@
-import { ResourceService } from "@/resource/resource.service";
+import { ResourceService } from "@/modules/resource/resource.service";
 import { AppDataSource } from "@/common/config/data-source";
 import { Resource } from "@/data/entities/Resource";
 import { Repository } from "typeorm";

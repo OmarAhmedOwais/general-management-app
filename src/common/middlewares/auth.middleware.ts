@@ -2,7 +2,7 @@ import { BaseMiddleware } from "../../base";
 import { Request, Response, NextFunction } from "express";
 import { UnauthorizedError } from "../../common/errors";
 import { logger, verifyToken } from "../../common/utils";
-import { UserService } from "../../user/user.service";
+import { UserService } from "../../modules/user/user.service";
 
 class AuthMiddleware implements BaseMiddleware {
   constructor(private userService: UserService) {}

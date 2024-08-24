@@ -1,5 +1,15 @@
 /**
  * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
  * tags:
  *   name: Resources
  *   description: Endpoints for resource management
@@ -12,6 +22,8 @@
  *     summary: Get all resources
  *     description: Retrieve all resources
  *     tags: [Resources]
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: List of resources
@@ -45,6 +57,8 @@
  *     summary: Get a resource by ID
  *     description: Retrieve a resource by its ID
  *     tags: [Resources]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -83,6 +97,8 @@
  *     summary: Create a new resource
  *     description: Add a new resource
  *     tags: [Resources]
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -127,6 +143,8 @@
  *     summary: Update a resource
  *     description: Modify a resource by its ID
  *     tags: [Resources]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -180,6 +198,8 @@
  *     summary: Delete a resource
  *     description: Remove a resource by its ID
  *     tags: [Resources]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -203,6 +223,8 @@
  *     summary: Search resources
  *     description: Search for resources based on a query
  *     tags: [Resources]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: query
  *         name: q

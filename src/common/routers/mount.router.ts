@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-import { authRouter } from '../../auth';
-import { userRouter } from '../../user';
-import { resourceRouter } from "../../resource"
+import { authRouter } from '../../modules/auth';
+import { userRouter } from '../../modules/user';
+import { resourceRouter } from "../../modules/resource"
 
 
 const mountRouter = Router();

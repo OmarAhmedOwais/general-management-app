@@ -15,7 +15,7 @@ const nestLikeFormat = winston.format.printf(
 );
 
 // Determine log directory (relative to the project root)
-const logsDirectory = path.resolve(__dirname, '../../../logs');
+const logsDirectory = path.resolve(__dirname, '../../../logs/');
 
 // Logger configuration
 export const logger = winston.createLogger({
@@ -33,7 +33,6 @@ export const logger = winston.createLogger({
       ),
     }),
     // Add DailyRotateFile transport for production
-    config.NODE_ENV === 'development' &&
       new DailyRotateFile({
         filename: path.join(logsDirectory, 'app-%DATE%.log'),
         datePattern: 'YYYY-MM-DD',

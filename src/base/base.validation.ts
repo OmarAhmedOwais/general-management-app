@@ -9,8 +9,8 @@ export abstract class BaseValidation {
       negated: true,
       errorMessage: 'ID cannot be empty',
     },
-    isMongoId: {
-      errorMessage: 'ID is not a valid MongoID',
+    isInt: {
+      errorMessage: 'ID is not a valid integer',
     },
   };
 
