@@ -39,7 +39,7 @@ The **General Management App** is a RESTful API designed for managing various re
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/your-username/general-management-app.git
+   git clone https://github.com/OmarAhmedOwais/general-management-app.git
    cd general-management-app
    ```
 
@@ -49,7 +49,15 @@ The **General Management App** is a RESTful API designed for managing various re
    npm install
    ```
 
-3. **Set up environment variables**: Create a `.env` file in the root directory and add the necessary configuration, such as database credentials.
+3. **Set up environment variables**: Create a `.env` file in the root directory with the following content:
+
+   ```env
+   JWT_SECRET=MySecret
+   PORT=3001
+   BCRYPT_SALT=MySALT
+   CORS_ORIGIN=*
+   JWT_EXPIRES_IN=1h
+   ```
 
 4. **Compile TypeScript**:
 
@@ -62,8 +70,11 @@ The **General Management App** is a RESTful API designed for managing various re
 1. **Environment Variables**: The application relies on environment variables defined in a `.env` file. Example:
 
    ```env
-   DATABASE_URL=your-database-url
-   JWT_SECRET=your-jwt-secret
+   JWT_SECRET=MySecret
+   PORT=3001
+   BCRYPT_SALT=MySALT
+   CORS_ORIGIN=*
+   JWT_EXPIRES_IN=1h
    ```
 
 2. **Data Source Configuration**: Configure your `DataSource` instance in `src/data-source.ts`.
@@ -79,7 +90,13 @@ The **General Management App** is a RESTful API designed for managing various re
 - **Run in Development Mode**: Runs the application with `ts-node-dev` for auto-reloading.
 
   ```bash
-  npm run dev
+  npm run start:dev
+  ```
+
+- **Run in Production Mode**: Runs the application with `ts-node`.
+
+  ```bash
+  npm run start:prod
   ```
 
 - **Build the Project**: Compiles TypeScript code to JavaScript.
@@ -152,7 +169,7 @@ API documentation is generated using Swagger. To view the documentation:
    npm start
    ```
 
-2. **Navigate to Swagger UI**: Open your browser and go to `http://localhost:3000/api-docs` to view the interactive API documentation.
+2. **Navigate to Swagger UI**: Open your browser and go to `http://localhost:3001/api-docs` to view the interactive API documentation.
 
 ## Migrations
 
