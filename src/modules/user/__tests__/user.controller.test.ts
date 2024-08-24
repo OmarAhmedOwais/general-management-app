@@ -1,9 +1,13 @@
-import { Request, Response } from 'express';
-import { UserController } from '../user.controller';
-import { UserService } from '../user.service';
-import { mockNext, mockRequest, mockResponse } from '@/common/utils/testHelpers';
-import { jest } from '@jest/globals';
-import { User } from '@/data/entities/User';
+import { Request, Response } from "express";
+import { UserController } from "../user.controller";
+import { UserService } from "../user.service";
+import {
+  mockNext,
+  mockRequest,
+  mockResponse,
+} from "@/common/utils/testHelpers";
+import { jest } from "@jest/globals";
+import { User } from "@/data/entities/User";
 
 interface IPaginationResult {
   totalItems: number;
@@ -18,7 +22,7 @@ interface IPaginationResult {
   hasPreviousPage: boolean;
 }
 
-describe('UserController', () => {
+describe("UserController", () => {
   let userController: UserController;
   let userServiceMock: jest.Mocked<UserService>;
 
@@ -35,19 +39,21 @@ describe('UserController', () => {
     userController = new UserController();
   });
 
-  it('should get user details successfully', async () => {
-    const req = mockRequest({ params: { id: '1' } }) as Request;
+  it("should get user details successfully", async () => {
+    const req = mockRequest({ params: { id: 1 } }) as Request;
     const res = mockResponse() as Response;
     const next = mockNext();
 
-    userServiceMock.findById.mockResolvedValueOnce({
+    const mockUser: User = {
       id: 1,
-      email: 'test@example.com',
-      password: 'hashedpassword',
-      role: 'user',
+      email: "test@example.com",
+      password: "hashedpassword",
+      role: "user",
       createdAt: new Date(),
       updatedAt: new Date(),
-    });
+    };
+
+    userServiceMock.findById.mockResolvedValueOnce(mockUser);
 
     await userController.findById(req, res, next);
 
@@ -55,32 +61,27 @@ describe('UserController', () => {
     expect(res.json).toHaveBeenCalledWith({
       messages: [
         {
-          message_en: 'User Fetched successfully',
-          type: 'SUCCESS',
+          message_en: "User Fetched successfully",
+          type: "SUCCESS",
         },
       ],
       statusCode: 200,
-      data: {
-        id: 1,
-        email: 'test@example.com',
-        password: 'hashedpassword',
-        role: 'user',
-        createdAt: expect.any(Date),
-        updatedAt: expect.any(Date),
-      },
+      data: mockUser,
     });
   });
 
-  it('should create a user successfully', async () => {
-    const req = mockRequest({ body: { email: 'test@example.com', password: 'password123' } }) as Request;
+  it("should create a user successfully", async () => {
+    const req = mockRequest({
+      body: { email: "test@example.com", password: "password123" },
+    }) as Request;
     const res = mockResponse() as Response;
     const next = mockNext();
 
-    const createdUser = {
+    const createdUser: User = {
       id: 1,
-      email: 'test@example.com',
-      password: 'hashedpassword',
-      role: 'user',
+      email: "test@example.com",
+      password: "hashedpassword",
+      role: "user",
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -93,8 +94,8 @@ describe('UserController', () => {
     expect(res.json).toHaveBeenCalledWith({
       messages: [
         {
-          message_en: 'User Created successfully',
-          type: 'SUCCESS',
+          message_en: "User Created successfully",
+          type: "SUCCESS",
         },
       ],
       statusCode: 201,
@@ -102,27 +103,27 @@ describe('UserController', () => {
     });
   });
 
-  it('should fetch all users successfully', async () => {
+  it("should fetch all users successfully", async () => {
     const req = mockRequest() as Request;
     const res = mockResponse() as Response;
     const next = mockNext();
-  
+
     const users: User[] = [
-      { 
-        id: 1, 
-        email: 'test1@example.com', 
-        password: 'hashedpassword1', 
-        role: 'user', 
-        createdAt: new Date(), 
-        updatedAt: new Date() 
+      {
+        id: 1,
+        email: "test1@example.com",
+        password: "hashedpassword1",
+        role: "user",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
-      { 
-        id: 2, 
-        email: 'test2@example.com', 
-        password: 'hashedpassword2', 
-        role: 'admin', 
-        createdAt: new Date(), 
-        updatedAt: new Date() 
+      {
+        id: 2,
+        email: "test2@example.com",
+        password: "hashedpassword2",
+        role: "admin",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ];
 
@@ -147,26 +148,29 @@ describe('UserController', () => {
     expect(res.json).toHaveBeenCalledWith({
       messages: [
         {
-          message_en: 'Users Fetched successfully',
-          type: 'SUCCESS',
+          message_en: "Users Fetched successfully",
+          type: "SUCCESS",
         },
       ],
       statusCode: 200,
       data: users,
       pagination,
     });
-  }); 
+  });
 
-  it('should update a user successfully', async () => {
-    const req = mockRequest({ params: { id: '1' }, body: { email: 'updated@example.com' } }) as Request;
+  it("should update a user successfully", async () => {
+    const req = mockRequest({
+      params: { id: "1" },
+      body: { email: "updated@example.com" },
+    }) as Request;
     const res = mockResponse() as Response;
     const next = mockNext();
 
     const updatedUser: User = {
       id: 1,
-      email: 'updated@example.com',
-      role: 'user',
-      password: 'hashedpassword', // Add the password property
+      email: "updated@example.com",
+      role: "user",
+      password: "hashedpassword",
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -179,8 +183,8 @@ describe('UserController', () => {
     expect(res.json).toHaveBeenCalledWith({
       messages: [
         {
-          message_en: 'User Updated successfully',
-          type: 'SUCCESS',
+          message_en: "User Updated successfully",
+          type: "SUCCESS",
         },
       ],
       statusCode: 200,
@@ -188,30 +192,30 @@ describe('UserController', () => {
     });
   });
 
-  it('should delete a user successfully', async () => {
-    const req = mockRequest({ params: { id: '1' } }) as Request;
+  it("should delete a user successfully", async () => {
+    const req = mockRequest({ params: { id: "1" } }) as Request;
     const res = mockResponse() as Response;
     const next = mockNext();
-  
+
     const deletedUser: User = {
       id: 1,
-      email: 'deleted@example.com',
-      password: 'hashedpassword',
-      role: 'user',
+      email: "deleted@example.com",
+      password: "hashedpassword",
+      role: "user",
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-  
+
     userServiceMock.delete.mockResolvedValueOnce(deletedUser);
-  
+
     await userController.delete(req, res, next);
-  
+
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       messages: [
         {
-          message_en: 'User Deleted successfully',
-          type: 'SUCCESS',
+          message_en: "User Deleted successfully",
+          type: "SUCCESS",
         },
       ],
       statusCode: 200,

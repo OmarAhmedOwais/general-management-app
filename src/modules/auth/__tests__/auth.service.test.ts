@@ -1,4 +1,4 @@
-import { AuthService } from "@/auth/auth.service";
+import { AuthService } from "@/modules/auth/auth.service";
 import { User } from "@/data/entities/User";
 import { AppDataSource } from "@/common/config/data-source";
 import { Repository } from "typeorm";

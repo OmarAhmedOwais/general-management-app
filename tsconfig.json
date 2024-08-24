@@ -19,7 +19,7 @@
   },
 
   "include": ["./**/*.ts"],
-  "exclude": ["node_modules","./coverage", "./dist", "__tests__", "jest.config.js"],
+  "exclude": ["node_modules","./coverage", "./dist", "__tests__", "jest.config.js", "**/*.spec.ts"],
   "ts-node": {
     "transpileOnly": true,
     "files": true

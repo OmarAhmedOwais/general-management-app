@@ -254,3 +254,22 @@
 2024-08-24 20:14:34 [info] Application - Server is running on port 3001
 2024-08-24 20:15:01 [info] Config - Configuration loaded successfully
 2024-08-24 20:15:01 [info] Application - Server is running on port 3001
+2024-08-24 20:53:27 [info] Config - Configuration loaded successfully
+2024-08-24 20:53:27 [info] Config - Configuration loaded successfully
+2024-08-24 21:00:13 [info] Config - Configuration loaded successfully
+2024-08-24 21:00:13 [info] Config - Configuration loaded successfully
+2024-08-24 21:06:11 [info] Config - Configuration loaded successfully
+2024-08-24 21:06:11 [info] Config - Configuration loaded successfully
+2024-08-24 21:06:12 [error] Application - Error in registerUser: No metadata for "User" was found.
+2024-08-24 21:20:53 [info] Application - Server is running on port 3001
+2024-08-24 21:35:43 [info] Config - Configuration loaded successfully
+2024-08-24 21:35:41 [info] Config - Configuration loaded successfully
+2024-08-24 21:35:42 [info] Config - Configuration loaded successfully
+2024-08-24 21:35:36 [info] Config - Configuration loaded successfully
+2024-08-24 21:35:36 [info] Config - Configuration loaded successfully
+2024-08-24 21:36:00 [error] Application - Error in registerUser: "expiresIn" should be a number of seconds or string representing a timespan eg: "1d", "20h", 60
+2024-08-24 21:35:36 [info] Config - Configuration loaded successfully
+2024-08-24 21:35:36 [info] Config - Configuration loaded successfully
+2024-08-24 21:36:00 [info] Config - Configuration loaded successfully
+2024-08-24 21:36:02 [info] Config - Configuration loaded successfully
+2024-08-24 21:36:10 [error] Application - Error in registerUser: No metadata for "User" was found.

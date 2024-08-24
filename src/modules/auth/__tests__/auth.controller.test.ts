@@ -1,10 +1,10 @@
-import { AuthController } from "@/auth/auth.controller";
-import { AuthService } from "@/auth/auth.service";
+import { AuthController } from "@/modules/auth/auth.controller";
+import { AuthService } from "@/modules/auth/auth.service";
 import { Request, Response, NextFunction } from "express";
 import { mockRequest, mockResponse, mockNext } from "@/common/utils/testHelpers";
 import { User } from "@/data/entities/User"; // Import the User type
 
-jest.mock('@/auth/auth.service');
+jest.mock('@/modules/auth/auth.service');
 
 describe('AuthController', () => {
   let authController: AuthController;

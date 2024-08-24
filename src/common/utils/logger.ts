@@ -19,7 +19,7 @@ const logsDirectory = path.resolve(__dirname, '../../../logs/');
 
 // Logger configuration
 export const logger = winston.createLogger({
-  level: config.NODE_ENV === 'development' ? 'debug' : 'info',
+  level: 'debug' ,
   format: winston.format.combine(
     winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     nestLikeFormat,

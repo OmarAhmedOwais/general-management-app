@@ -1,6 +1,7 @@
+// src/common/config/config.ts
 import { IConfig } from '../../data/types';
 import logger from '../utils/logger';
-import { validateEnv } from '../utils';
+import { validateEnv } from '../utils/config'; // Ensure the correct path
 
 class ConfigSingleton {
   private static instance: IConfig;

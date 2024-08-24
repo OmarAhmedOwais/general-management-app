@@ -1,13 +1,10 @@
-import joi from "joi";
-import { IConfig } from "../../data/types";
+import Joi from 'joi';
+import { IConfig } from '../../data/types';
 
-export const envVarsSchema = joi
-  .object<IConfig>({
-    PORT: joi.number().required(),
-    //NODE_ENV: joi.string().valid("development", "production").required(),
-    BCRYPT_SALT: joi.string().required(),
-    CORS_ORIGIN: joi.string().required(),
-    JWT_SECRET: joi.string().required(),
-    JWT_EXPIRES_IN: joi.string().required(),
-  })
-  .unknown(true);
+export const envVarsSchema = Joi.object<IConfig>({
+  PORT: Joi.number().required(),
+  BCRYPT_SALT: Joi.string().required(),
+  CORS_ORIGIN: Joi.string().required(),
+  JWT_SECRET: Joi.string().required(),
+  JWT_EXPIRES_IN: Joi.string().required(),
+}).unknown(true);
