@@ -1,14 +1,19 @@
 {
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "your_username",
-    "password": "your_password",
-    "database": "general_management",
-    "synchronize": true,
-    "logging": false,
-    "entities": ["src/entities/**/*.ts"],
-    "migrations": ["src/migration/**/*.ts"],
-    "subscribers": ["src/subscriber/**/*.ts"]
-  }
-  
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "your_username",
+  "password": "your_password",
+  "database": "general_management",
+  "synchronize": true,
+  "logging": false,
+  "entities": [
+    "src/entities/**/*.{ts,js}"
+  ],
+  "migrations": [
+    "src/migration/**/*.{ts,js}"
+  ],
+  "subscribers": [
+    "src/subscriber/**/*.{ts,js}"
+  ]
+}
